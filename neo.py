@@ -53,7 +53,7 @@ elif re.match('.*Community.*', dayname):
 """
 auth = OAuth1('key goes here', 'secret goes here', '', '')
 
-user_name = 'Shannon Mante-Green'
+user_name = 'User's Name Here
 url = 'https://api.schoology.com/v1/search?keywords=' + user_name + '&type=user'
 user_id = json.loads(requests.get(url, auth=auth).text)
 user_id = user_id['users']['search_result'][0]['uid']
