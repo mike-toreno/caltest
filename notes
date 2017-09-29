@@ -1,0 +1,12 @@
+#To get unix time:
+import time
+utime = int(time.time())
+#To generate a nonce
+## pip install oauth2
+import oauth2
+generate_nonce(length=8)
+##or
+nonce = str(random.randint(0, 100000000))
+100000000
+#oauth_token should be blank
+#oauth_signature is oauth_consumer_secret
