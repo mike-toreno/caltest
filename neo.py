@@ -22,7 +22,6 @@ Community = 0
 MP = 0
 Early = 0
 
-#Days = [Gold[6,7,8,9,10,11], Black[1,2,3,4,5]] #etc. ?
 Days = [[0 for i in range(4)]for j in range(3)]
 #Equivalent to `int days[3][4];`
 current_time = datetime.datetime.utcnow()
@@ -36,8 +35,10 @@ for i in range(len(cal.events)):
 		j += 1
 
 for i in range(len(found_events)):
-	if re.match('(.*Black 1|.*Gold 5)', found_events[i]):
-		dayname = found_events[i]	
+	m = re.search(r'(.*Black|.*Gold) (.*MP)', found_events[i])
+	if m:
+		dayname = m.group(1)
+		MP = bool(m.group(2))
 		break
 	else:
 		dayname = 'No School'
@@ -50,10 +51,9 @@ elif re.match('.*MP', dayname):
 elif re.match('.*Community.*', dayname):
 	Community = 1
 
-"""
-auth = OAuth1('key goes here', 'secret goes here', '', '')
+auth = OAuth1('consumer_key', 'consumer_secret', '', '')
 
-user_name = 'User's Name Here
+user_name = 'User Name'
 url = 'https://api.schoology.com/v1/search?keywords=' + user_name + '&type=user'
 user_id = json.loads(requests.get(url, auth=auth).text)
 user_id = user_id['users']['search_result'][0]['uid']
@@ -67,15 +67,21 @@ courses_json = json.loads(requests.get(url, auth=auth).text)
 for i in range(len(courses_json['section'])):
 	if re.match('[0-9]{1,2}',courses_json['section'][i]['section_title']):
 		course[int(re.match('[0-9]{1,2}',courses_json['section'][i]['section_title']).group(0))] = courses_json['section'][i]['course_title']
-"""
 
-"""
 if dayname == 'No School':
 	print("Placeholder")
 	#Only print the calendar
 elif dayname == 'Gold':
-	print(course[6] + course[7] + "etc.")
-"""
+	for i in range(6, 12):
+		if course[i] != None:
+			print(course[i])
+elif dayname == 'Black':
+	for i in range(1, 6):
+		if course[i] != None:
+			print(course[i])
+		if i == 5 and MP:
+			print("MP")
+
 """
 Java librarys:
 Scribejava
